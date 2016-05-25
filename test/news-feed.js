@@ -4,12 +4,13 @@ const test = require('ava');
 const newsFeed = require('../lib/news-feed');
 const nock = require('nock');
 const sinon = require('sinon');
-const techcrunch = require('./helpers/feed');
 
 // require test helpers
 const BotHelper = require('./helpers/bot');
 const StorageHelper = require('./helpers/storage');
 const MessageHelper = require('./helpers/message');
+
+//const techcrunch = require('./helpers/feed.xml');
 
 // setup good invitation test
 test.beforeEach(t => {
@@ -30,8 +31,8 @@ test('it replies with a news article', t => {
   t.plan(1);
   let { bot, message } = t.context;
   let replyMessage = 'soy una noticia';
-  nock('http://feeds.feedburner.com/').get('TechCrunch')
-    .reply(200, techcrunch);
+  // nock('http://feeds.feedburner.com/').get('TechCrunch')
+  //   .reply(200, techcrunch);
 
   return newsFeed(bot, message).then(() => {
     t.true(bot.say.calledWith(replyMessage));
