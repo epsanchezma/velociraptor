@@ -1,11 +1,11 @@
 'use strict';
 
 const Botkit = require('botkit');
-const invite = require('./lib/invite');
-const onboard = require('./lib/onboard');
-const storage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGO_URI });
+const newsFeed = require('./lib/news-feed');
 const debug = require('debug')('bot:main');
 const config = require('./package.json');
+
+// const storage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGO_URI });
 
 // Expect a SLACK_TOKEN environment variable
 let slackToken = process.env.SLACK_TOKEN;
@@ -15,7 +15,7 @@ if (!slackToken) {
 }
 
 let controller = Botkit.slackbot({
-  storage: storage,
+  // storage: storage,
 });
 
 let bot = controller.spawn({
@@ -40,22 +40,7 @@ controller.hears(['coqueto'], ['direct_mention', 'direct_message'], (bot, messag
   );
 });
 
-/**
- * Invitations
- */
-controller.hears('invite a <mailto:(.*)\\|.*>', 'direct_message', invite);
-
-controller.hears('invite', 'direct_mention', (bot, message) => {
-  bot.reply(message, 'Invitaciones por DM por favor :soccer:');
-});
-
-/**
- * Private Onboarding
- * for testing you can subscribe to `user_change` and modify your own profile
- * so an event with the same info fires, since we don't have a way to simulate
- * slack events easily right now
- */
-controller.on('team_join', onboard);
+controller.hears(['news'], ['direct_mention', 'direct_message'], newsFeed);
 
 /**
  * Help
