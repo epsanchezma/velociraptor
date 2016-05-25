@@ -1,7 +1,6 @@
 'use strict';
 
 const Botkit = require('botkit');
-const invite = require('./lib/invite');
 const onboard = require('./lib/onboard');
 const storage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGO_URI });
 const debug = require('debug')('bot:main');
@@ -38,15 +37,6 @@ controller.hears(['coqueto'], ['direct_mention', 'direct_message'], (bot, messag
     message,
     'Yo no soy coqueto... soy un tierno. https://www.youtube.com/watch?v=sFpdl0EiLkA'
   );
-});
-
-/**
- * Invitations
- */
-controller.hears('invite a <mailto:(.*)\\|.*>', 'direct_message', invite);
-
-controller.hears('invite', 'direct_mention', (bot, message) => {
-  bot.reply(message, 'Invitaciones por DM por favor :soccer:');
 });
 
 /**
