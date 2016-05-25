@@ -1,7 +1,7 @@
 'use strict';
 
 const test = require('ava');
-const onboard = require('../lib/onboard');
+const newsFeed = require('../lib/news-feed');
 const sinon = require('sinon');
 
 // require test helpers
