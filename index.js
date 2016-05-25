@@ -2,9 +2,10 @@
 
 const Botkit = require('botkit');
 const newsFeed = require('./lib/news-feed');
-const storage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGO_URI });
 const debug = require('debug')('bot:main');
 const config = require('./package.json');
+
+// const storage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGO_URI });
 
 // Expect a SLACK_TOKEN environment variable
 let slackToken = process.env.SLACK_TOKEN;
@@ -14,7 +15,7 @@ if (!slackToken) {
 }
 
 let controller = Botkit.slackbot({
-  storage: storage,
+  // storage: storage,
 });
 
 let bot = controller.spawn({
